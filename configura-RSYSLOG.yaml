@@ -1,0 +1,23 @@
+---
+- hosts: all
+  tasks:
+  - name: add o modifica linea de servidor
+    lineinfile:
+        path: /etc/rsyslog.conf
+        regexp: ' @@10.25.0.135'
+        line: 'authpriv.* @@10.25.0.135:516'
+        backup: yes
+  
+  - name: comentario antes de la linea añadida anteriormente
+    lineinfile:
+        path: /etc/rsyslog.conf
+        regexp: '### Envio de logs de acceso'
+        insertbefore: 'authpriv.* @@10.25.0.135:516'
+        line: '### Envio de logs de acceso'
+        backup: yes
+
+  - name: comprobacion que esta el servicio rsyslog ejecutandose
+    service:
+        name=rsyslog
+        state=restarted
+        enabled=yes
