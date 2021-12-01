@@ -33,7 +33,7 @@
 
   - name: copy rpm to machine
     copy:
-      src: /software/XDR/ENAGAS_750_Linux_0109221.rpm
+      src: /software/XDR/Linux_0109221.rpm
       dest: /tmp/Linux_0109221.rpm
       owner: root
       mode: 0755
@@ -46,7 +46,7 @@
 
   - name: Install package Cortex XDR
     yum:
-      name: /tmp/ENAGAS_750_Linux_0109221.rpm
+      name: /tmp/Linux_0109221.rpm
       state: present
 
   - name: Execute command to configure 
