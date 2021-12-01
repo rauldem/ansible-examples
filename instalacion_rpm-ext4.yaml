@@ -4,37 +4,37 @@
   - name: Create a logical volume of 1G
     lvol:
       vg: vg_sistema
-      lv: lv_xdr
+      lv: lv_softw
       size: 1g
 
   - name: Create directory
     file:
-      path: /opt/traps
+      path: /opt/softw
       state: directory
       mode: '0755'
 
   - name: Format ext4 filesystem
     filesystem:
       fstype: ext4
-      dev: /dev/vg_sistema/lv_xdr
+      dev: /dev/vg_sistema/lv_softw
 
-  - name: mount de xdr filesystem
+  - name: mount filesystem
     mount:
-      path: /opt/traps
-      src: /dev/vg_sistema/lv_xdr
+      path: /opt/softw
+      src: /dev/vg_sistema/lv_softw
       fstype: ext4
       state: mounted
 
   - name: Añadir linea al fstab
     lineinfile:
       path: /etc/fstab
-      line: '/dev/mapper/vg_sistema-lv_xdr   /opt/traps     ext4    defaults    1 2'
+      line: '/dev/mapper/vg_sistema-lv_softw   /opt/softw     ext4    defaults    1 2'
       backup: yes
 
   - name: copy rpm to machine
     copy:
-      src: /software/XDR/Linux_0109221.rpm
-      dest: /tmp/Linux_0109221.rpm
+      src: /software/Linux_softw.rpm
+      dest: /tmp/Linux_softw.rpm
       owner: root
       mode: 0755
 
@@ -44,16 +44,16 @@
       state: present
       update_cache: True
 
-  - name: Install package Cortex XDR
+  - name: Install package 
     yum:
-      name: /tmp/Linux_0109221.rpm
+      name: /tmp/Linux_softw.rpm
       state: present
 
   - name: Execute command to configure 
-    command: /opt/traps/bin/cytool proxy set "172.16.11.31:8888"
+    command: /opt/bin/config_softw set "XX.XX.XX.XX:5555"
 
   - name: Restart service 
     ansible.builtin.systemd:
       state: restarted
       daemon_reload: yes
-      name: traps_pmd
+      name: softw_srv
