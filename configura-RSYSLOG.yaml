@@ -1,7 +1,7 @@
 ---
 - hosts: all
   tasks:
-  - name: Añadir linea envio de los accesos a un servidor remoto
+  - name: Envio de los accesos locales a un servidor remoto
     lineinfile:
         path: /etc/rsyslog.conf
         regexp: ' @@xx.xx.xx.xx'
