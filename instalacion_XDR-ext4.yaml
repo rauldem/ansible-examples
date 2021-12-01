@@ -34,7 +34,7 @@
   - name: copy rpm to machine
     copy:
       src: /software/XDR/ENAGAS_750_Linux_0109221.rpm
-      dest: /tmp/ENAGAS_750_Linux_0109221.rpm
+      dest: /tmp/Linux_0109221.rpm
       owner: root
       mode: 0755
 
